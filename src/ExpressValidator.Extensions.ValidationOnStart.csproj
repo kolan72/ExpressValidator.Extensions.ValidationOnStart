@@ -13,6 +13,8 @@
     <Version>0.1.0-preview</Version>
     <Copyright>Copyright 2025 Andrey Kolesnichenko</Copyright>
     <PackageTags>Configuration FluentValidation Validation</PackageTags>
+    <PackageProjectUrl>https://github.com/kolan72/ExpressValidator.Extensions.ValidationOnStart</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kolan72/ExpressValidator.Extensions.ValidationOnStart</RepositoryUrl>
     <PackageIcon>ExpressValidator.png</PackageIcon>
     <PackageReadmeFile>NuGet.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
