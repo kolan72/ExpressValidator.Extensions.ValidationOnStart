@@ -33,13 +33,13 @@ var logger = loggerFactory.CreateLogger<Program>();
 try
 {
 	var app = builder.Build();
-	// This endpoint returns a greeting once all options are validated.
+	// This endpoint returns a message when all options are valid.
 	app.MapGet("/",
-		(IOptions<MyOptions1> options1, IOptions<MyOptions2> options2) => "Hello, " +
+		(IOptions<MyOptions1> options1, IOptions<MyOptions2> options2) => "The option values " +
 			$"{options1.Value.Option1}, " +
 			$"{options1.Value.Option2}, " +
 			$"{options2.Value.Option3}, " +
-			$"{options2.Value.Option4}!");
+			$"and {options2.Value.Option4} are correct!");
 
 	await app.RunAsync();
 }
