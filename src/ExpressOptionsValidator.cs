@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using FluentValidation.Results;
+using Microsoft.Extensions.Options;
 
 namespace ExpressValidator.Extensions.ValidationOnStart
 {
@@ -6,6 +7,9 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 	{
 		private readonly IExpressValidator<TOptions> _expressValidator;
 		private readonly string _name;
+
+		private static readonly Func<string, ValidationFailure, string> _failureFactory
+			= static (string type, ValidationFailure failure) => $"Validation failed for {type}.{failure.PropertyName} with the error: {failure.ErrorMessage}";
 
 		private ExpressOptionsValidator(string name, Action<ExpressValidatorBuilder<TOptions>> configure, OnFirstPropertyValidatorFailed validationMode = OnFirstPropertyValidatorFailed.Continue)
 		{
@@ -41,8 +45,7 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 
 			foreach (var failure in result.Errors)
 			{
-				errors.Add($"Validation failed for {type}.{failure.PropertyName} " +
-						   $"with the error: {failure.ErrorMessage}");
+				errors.Add(_failureFactory(type, failure));
 			}
 
 			return ValidateOptionsResult.Fail(errors);
