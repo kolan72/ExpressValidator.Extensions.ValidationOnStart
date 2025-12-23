@@ -31,8 +31,7 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 				return ValidateOptionsResult.Skip;
 			}
 
-			if (options is null)
-				throw new ArgumentNullException(nameof(options));
+			ArgumentNullException.ThrowIfNull(options);
 
 			var result = _expressValidator.Validate(options);
 			if (result.IsValid)
