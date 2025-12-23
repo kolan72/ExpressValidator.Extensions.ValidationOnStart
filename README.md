@@ -103,6 +103,22 @@ catch (Exception ex)
 	logger.LogCritical(ex, "An unhandled exception occurred during application startup.");
 }
 ```
+In the *appsettings.json*
+
+```csharp
+{
+...
+"MyOptions1": {
+  "Option1": 9,
+  "Option2": 19
+},
+"MyOptions2": {
+  "Option3": 29,
+  "Option4": 39
+}
+...
+}
+```
 
 ## 🧩 How It Works
 
