@@ -3,12 +3,12 @@
 ## ✨ Key Features
 
 - **Fail-fast validation on startup** with the `AddOptionsWithExpressValidation<MyOptions>` method
-- **Startup validation** - Validation failures are converted to a standard `ValidateOptionsResult` with detailed messages
+- **Validation failures** are converted to a standard `ValidateOptionsResult` with detailed messages
 - **Detailed error reporting** - `OptionsValidationException` or `AggregateException` can be handled at startup
-- **Uses `IValidateOptions<TOptions>`** under the hood.
 - **Configurable validation**: stop on the first error or continue validating an option using `ExpressValidator.OnFirstPropertyValidatorFailed`.
 - **Zero boilerplate** - no need to create separate `AbstractValidator` classes 
 - **Fluent API** - for property-level rules 
+- **Uses `IValidateOptions<TOptions>`** under the hood
 
 ## ⚡ Quick Start
 
@@ -32,7 +32,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
 	.AddOptionsWithExpressValidation<MyOptions1>(
 	(eb) =>
-			// Select the options properties to validate
+			// Select the options property to validate
 			eb.AddProperty(o => o.Option1)
 			// Define FluentValidation rules
 			.WithValidation(o => o.GreaterThan(10))
@@ -101,6 +101,22 @@ catch (AggregateException ae) when (ae.InnerExceptions.All(e => e is OptionsVali
 catch (Exception ex)
 {
 	logger.LogCritical(ex, "An unhandled exception occurred during application startup.");
+}
+```
+In the *appsettings.json*
+
+```csharp
+{
+...
+"MyOptions1": {
+  "Option1": 9,
+  "Option2": 19
+},
+"MyOptions2": {
+  "Option3": 29,
+  "Option4": 39
+}
+...
 }
 ```
 
