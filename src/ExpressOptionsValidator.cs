@@ -40,7 +40,7 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 			}
 
 			var type = options.GetType().Name;
-			var errors = new List<string>();
+			var errors = new List<string>(result.Errors.Count);
 
 			foreach (var failure in result.Errors)
 			{
