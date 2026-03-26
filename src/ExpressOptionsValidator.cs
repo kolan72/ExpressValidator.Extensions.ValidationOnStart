@@ -8,8 +8,8 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 		private readonly IExpressValidator<TOptions> _expressValidator;
 		private readonly string _name;
 
-		private static readonly Func<string, ValidationFailure, string> _failureFactory
-			= static (string type, ValidationFailure failure) => $"Validation failed for {type}.{failure.PropertyName} with the error: {failure.ErrorMessage}";
+		private static readonly Func<ValidationFailure, string> _failureFactory
+			= static (failure) => $"Validation failed for {typeof(TOptions).Name}.{failure.PropertyName} with the error: {failure.ErrorMessage}";
 
 		private ExpressOptionsValidator(string name, Action<ExpressValidatorBuilder<TOptions>> configure, OnFirstPropertyValidatorFailed validationMode = OnFirstPropertyValidatorFailed.Continue)
 		{
@@ -39,12 +39,11 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 				return ValidateOptionsResult.Success;
 			}
 
-			var type = options.GetType().Name;
 			var errors = new List<string>(result.Errors.Count);
 
 			foreach (var failure in result.Errors)
 			{
-				errors.Add(_failureFactory(type, failure));
+				errors.Add(_failureFactory(failure));
 			}
 
 			return ValidateOptionsResult.Fail(errors);
