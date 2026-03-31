@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace ExpressValidator.Extensions.ValidationOnStart
 {
-	public class ExpressOptionsValidator<TOptions> : IValidateOptions<TOptions> where TOptions : class
+	internal sealed class ExpressOptionsValidator<TOptions> : IValidateOptions<TOptions> where TOptions : class
 	{
 		private readonly IExpressValidator<TOptions> _expressValidator;
 		private readonly string _name;
