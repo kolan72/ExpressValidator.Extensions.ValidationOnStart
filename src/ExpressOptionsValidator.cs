@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using Microsoft.Extensions.Options;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ExpressValidator.Extensions.ValidationOnStart
 {
@@ -33,20 +34,27 @@ namespace ExpressValidator.Extensions.ValidationOnStart
 
 			ArgumentNullException.ThrowIfNull(options);
 
-			var result = _expressValidator.Validate(options);
-			if (result.IsValid)
+			try
 			{
-				return ValidateOptionsResult.Success;
+				var result = _expressValidator.Validate(options);
+				if (result.IsValid)
+				{
+					return ValidateOptionsResult.Success;
+				}
+
+				var errors = new List<string>(result.Errors.Count);
+
+				foreach (var failure in result.Errors)
+				{
+					errors.Add(_failureFactory(failure));
+				}
+
+				return ValidateOptionsResult.Fail(errors);
 			}
-
-			var errors = new List<string>(result.Errors.Count);
-
-			foreach (var failure in result.Errors)
+			catch (Exception ex)
 			{
-				errors.Add(_failureFactory(failure));
+				return ValidateOptionsResult.Fail(ex.Message);
 			}
-
-			return ValidateOptionsResult.Fail(errors);
 		}
 	}
 }

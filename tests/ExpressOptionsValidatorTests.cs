@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using FluentValidation;
+using Microsoft.Extensions.Options;
 
 namespace ExpressValidator.Extensions.ValidationOnStart.Tests
 {
@@ -57,6 +58,22 @@ namespace ExpressValidator.Extensions.ValidationOnStart.Tests
 			// Act & Assert
 			Assert.That(() => validator.Validate("test", null!),
 				Throws.ArgumentNullException.With.Property("ParamName").EqualTo("options"));
+		}
+
+		[Test]
+		public void Should_Not_Throw_WhenUse_WithAsyncValidation()
+		{
+			// Arrange
+			var validator = ExpressOptionsValidator<TestOptions>.Create(
+				"test",
+				(eb) => eb.AddProperty(o => o.Age)
+				.WithAsyncValidation((o) => o.MustAsync(async (_, __) => { await Task.Delay(1); return true; })));
+
+			// Act
+			var result = validator.Validate("test", new TestOptions());
+
+			// Assert
+			Assert.That(result.Failures!.Count, Is.EqualTo(1));
 		}
 	}
 }
