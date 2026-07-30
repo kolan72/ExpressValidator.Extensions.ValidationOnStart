@@ -1,6 +1,5 @@
 ﻿using FluentValidation.Results;
 using Microsoft.Extensions.Options;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ExpressValidator.Extensions.ValidationOnStart
 {
