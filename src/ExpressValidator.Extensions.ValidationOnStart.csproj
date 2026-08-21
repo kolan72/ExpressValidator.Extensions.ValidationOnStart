@@ -37,9 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExpressValidator" Version="0.15.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.5" />
+    <PackageReference Include="ExpressValidator" Version="0.20.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.11" />
   </ItemGroup>
 
   <ItemGroup>
